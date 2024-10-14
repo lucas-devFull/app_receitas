@@ -1,6 +1,5 @@
 import 'package:app_receitas/providers/recipe_provider.dart';
 import 'package:app_receitas/views/recipe_details.dart';
-import 'package:app_receitas/views/widgets/category_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,6 +11,8 @@ class RecipeList extends StatefulWidget {
 }
 
 class _RecipeListState extends State<RecipeList> {
+  TextEditingController searchController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -20,11 +21,10 @@ class _RecipeListState extends State<RecipeList> {
   @override
   Widget build(BuildContext context) {
     final recipeProvider = Provider.of<RecipeProvider>(context);
-    TextEditingController searchController = TextEditingController();
 
     void searchRecipe() {
       String query = searchController.text;
-      // fetchRecipes(query);
+      recipeProvider.fetchRecipe(query);
     }
 
     return Scaffold(
@@ -42,7 +42,7 @@ class _RecipeListState extends State<RecipeList> {
             TextField(
               controller: searchController,
               decoration: InputDecoration(
-                hintText: 'Search Recipe...',
+                hintText: 'Search Recipe and press enter...',
                 prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),

@@ -12,4 +12,12 @@ class RecipeController {
 
     return jsonData.map((recipe) => Recipe.fromJson(recipe)).toList();
   }
+
+  Future<List<Recipe>> getRecipe({required String term}) async {
+    Uri url = Uri.parse(baseUrl + term);
+    final response = await http.get(url);
+    List<dynamic> jsonData = json.decode(response.body)['meals'];
+
+    return jsonData.map((recipe) => Recipe.fromJson(recipe)).toList();
+  }
 }

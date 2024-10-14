@@ -30,4 +30,19 @@ class RecipeProvider with ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> fetchRecipe(String term) async {
+    try {
+      _isLoading = true;
+      List<Recipe> recipes = await _recipeController.getRecipe(term: term);
+      _recipes = recipes;
+      _isLoading = false;
+      _hasError = false;
+      notifyListeners();
+    } catch (e) {
+      _isLoading = false;
+      _hasError = true;
+      notifyListeners();
+    }
+  }
 }

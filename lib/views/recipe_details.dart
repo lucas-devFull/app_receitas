@@ -29,44 +29,61 @@ class RecipeDetails extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Stack(
-            children: [
-              Padding(
-                  padding: const EdgeInsets.fromLTRB(5, 40, 5, 15),
+          Expanded(
+            flex: 3,
+            child: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(5, 40, 5, 0),
                   child: SizedBox(
-                      height: 300,
-                      width: double.infinity,
-                      child: recipe.video != ""
-                          ? YouTubeVideoPlayer(videoUrl: recipe.video)
-                          : Image.network(
-                              height: 300,
-                              width: double.infinity,
-                              recipe.thumbnail,
-                            ))),
-              Positioned(
-                right: 30,
-                child: IconButton(
-                  onPressed: () {
-                    if (isFavorite) {
-                      favoriteProvider.removeFavoriteRecipe(recipe);
-                    } else {
-                      favoriteProvider.addFavoriteRecipe(recipe);
-                    }
-                  },
-                  icon: Icon(
-                    Icons.favorite,
-                    color: isFavorite ? Colors.red : null,
+                    height: 300,
+                    width: double.infinity,
+                    child: recipe.video != ""
+                        ? YouTubeVideoPlayer(videoUrl: recipe.video)
+                        : Image.network(
+                            height: 300,
+                            width: double.infinity,
+                            recipe.thumbnail,
+                          ),
                   ),
                 ),
-              )
-            ],
+                Positioned(
+                  right: 30,
+                  child: IconButton(
+                    onPressed: () {
+                      if (isFavorite) {
+                        favoriteProvider.removeFavoriteRecipe(recipe);
+                      } else {
+                        favoriteProvider.addFavoriteRecipe(recipe);
+                      }
+                    },
+                    icon: Icon(
+                      Icons.favorite,
+                      color: isFavorite ? Colors.red : null,
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
-          Container(
-            color: const Color.fromARGB(255, 45, 45, 45),
+          Padding(
+            padding: const EdgeInsets.all(10),
             child: Text(
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
               recipe.title,
             ),
           ),
+          Expanded(
+            flex: 3,
+            child: SizedBox(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(5, 10, 15, 5),
+                  child: Text(recipe.instrictions),
+                ),
+              ),
+            ),
+          )
         ],
       ),
     );
